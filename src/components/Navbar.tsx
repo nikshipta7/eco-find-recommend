@@ -33,6 +33,12 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
             <Link to="/categories" className="text-foreground hover:text-primary transition-colors">
               Categories
             </Link>
+            <Link to="/login" className="text-foreground hover:text-primary transition-colors">
+              Login
+            </Link>
+            <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
+              Dashboard
+            </Link>
           </div>
           
           <form onSubmit={handleSubmit} className="hidden md:flex items-center flex-1 max-w-md mx-4">

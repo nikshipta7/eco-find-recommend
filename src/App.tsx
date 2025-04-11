@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Categories from "./pages/Categories";
 import CategoryDetail from "./pages/CategoryDetail";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import { useEffect } from "react";
 
 // Create a component to handle search queries from URL
@@ -41,6 +43,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/category/:categoryId" element={<CategoryDetail />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
