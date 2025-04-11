@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Leaf, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import CartDropdown from './CartDropdown';
 
 interface NavbarProps {
   onSearch: (query: string) => void;
@@ -58,10 +60,13 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
             </div>
           </form>
           
-          <div className="flex md:hidden">
-            <Button variant="ghost" size="icon">
-              <Search className="h-5 w-5" />
-            </Button>
+          <div className="flex items-center">
+            <CartDropdown />
+            <div className="md:hidden ml-2">
+              <Button variant="ghost" size="icon">
+                <Search className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </div>
         

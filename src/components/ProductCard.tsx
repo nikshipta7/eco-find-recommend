@@ -1,15 +1,32 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Leaf, Recycle } from 'lucide-react';
+import { Leaf, Recycle, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { Product } from '@/data/products';
+import { Button } from '@/components/ui/button';
+import { useCart } from '@/contexts/CartContext';
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
+  
+  const handleIncrement = () => {
+    setQuantity(prev => prev + 1);
+  };
+  
+  const handleDecrement = () => {
+    setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  };
+  
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+  };
+  
   const renderEcoScore = () => {
     return Array(5).fill(0).map((_, index) => (
       <Leaf 
@@ -50,10 +67,40 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <div className="flex">{renderEcoScore()}</div>
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 text-xs text-muted-foreground border-t">
-        <div className="w-full flex justify-between">
+      <CardFooter className="p-4 border-t flex flex-col gap-2">
+        <div className="w-full flex justify-between text-xs text-muted-foreground">
           <span>Carbon: {product.carbonFootprint} kg CO₂e</span>
           <span>{product.type}</span>
+        </div>
+        
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center border rounded-md">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8 rounded-l-md p-0"
+              onClick={handleDecrement}
+            >
+              <Minus className="h-3 w-3" />
+            </Button>
+            <span className="w-8 text-center text-sm">{quantity}</span>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8 rounded-r-md p-0"
+              onClick={handleIncrement}
+            >
+              <Plus className="h-3 w-3" />
+            </Button>
+          </div>
+          <Button 
+            onClick={handleAddToCart}
+            size="sm"
+            className="gap-1"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            Add to Cart
+          </Button>
         </div>
       </CardFooter>
     </Card>
