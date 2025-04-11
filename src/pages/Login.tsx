@@ -1,17 +1,26 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleSearch = (query: string) => {
     navigate(`/?search=${encodeURIComponent(query)}`);
@@ -30,12 +39,16 @@ const Login = () => {
       return;
     }
     
-    // Mock login - in a real app, this would call an authentication API
-    // For demo purposes, just navigate to dashboard
+    // Simple login - in a real app, this would call an authentication API
+    // For demo purposes, we're storing login state in localStorage
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userEmail', email);
+    
     toast({
       title: "Success",
       description: "Login successful!",
     });
+    
     navigate('/dashboard');
   };
 
@@ -74,7 +87,7 @@ const Login = () => {
           </CardContent>
           <CardFooter className="flex justify-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account? <a href="#" className="text-primary">Sign up</a>
+              Don't have an account? <Link to="/signup" className="text-primary">Sign up</Link>
             </p>
           </CardFooter>
         </Card>

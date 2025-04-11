@@ -8,7 +8,9 @@ import NotFound from "./pages/NotFound";
 import Categories from "./pages/Categories";
 import CategoryDetail from "./pages/CategoryDetail";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { SustainableProducts } from "./components/SustainableProducts";
 import { useEffect } from "react";
 
@@ -44,7 +46,15 @@ const App = () => (
           <Route path="/categories" element={<Categories />} />
           <Route path="/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/sustainable-products" element={<SustainableProducts />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

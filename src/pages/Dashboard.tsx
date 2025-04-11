@@ -1,9 +1,10 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Search, Leaf } from 'lucide-react';
+import { Search, Leaf, LogOut } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import {
   BarChart,
   Bar,
@@ -18,18 +19,30 @@ import {
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const userEmail = localStorage.getItem('userEmail') || 'User';
 
   const handleSearch = (query: string) => {
     navigate(`/?search=${encodeURIComponent(query)}`);
   };
 
-  // Data for the score donut chart
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userEmail');
+    
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
+    
+    navigate('/login');
+  };
+
   const scoreData = [
     { name: 'Score', value: 57 },
     { name: 'Remaining', value: 43 },
   ];
 
-  // Data for the carbon footprint bar chart
   const carbonData = [
     { name: 'Q1', value: 8.0 },
     { name: 'Q2', value: 6.4 },
@@ -37,14 +50,12 @@ const Dashboard = () => {
     { name: 'Q4', value: 2.1 },
   ];
 
-  // Data for the star products pie chart
   const productData = [
     { name: 'Recycled', value: 50, color: '#0bb07b' },
     { name: 'Organic', value: 30, color: '#4bc0c0' },
     { name: 'Other', value: 20, color: '#a5e7e2' },
   ];
 
-  // Data for recent purchases
   const recentPurchases = [
     { id: 1, name: 'Reusable Bags', count: 2, date: '2024-04-05', price: 33 },
     { id: 2, name: 'Eco Cleaners', count: 5, date: '2024-04-01', price: 5.63 },
@@ -56,20 +67,31 @@ const Dashboard = () => {
       
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="search"
-              placeholder="Search..."
-              className="pl-10 pr-4 py-2 rounded-md border border-gray-200"
-            />
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
+            <p className="text-gray-600">Welcome, {userEmail}</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="search"
+                placeholder="Search..."
+                className="pl-10 pr-4 py-2 rounded-md border border-gray-200"
+              />
+            </div>
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
           </div>
         </div>
 
-        {/* Top row cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* EcoScore Card */}
           <Card className="overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-gray-700">EcoScore</CardTitle>
@@ -121,7 +143,6 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Carbon Footprint Card */}
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-gray-700">Carbon Footprint</CardTitle>
@@ -143,7 +164,6 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Recent Purchases Summary */}
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-gray-700">Recent Purchases</CardTitle>
@@ -194,7 +214,6 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Recently Purchased */}
         <div className="mb-8">
           <Card className="bg-green-800 text-white">
             <CardHeader className="pb-2">
@@ -225,9 +244,7 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Bottom row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Star Product Chart */}
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-gray-700">Star Product</CardTitle>
