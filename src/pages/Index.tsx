@@ -1,12 +1,44 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import FeaturedCategories from '@/components/FeaturedCategories';
+import SearchResults from '@/components/SearchResults';
+import { searchProducts, Product } from '@/data/products';
 
 const Index = () => {
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    setSearchResults(searchProducts(query));
+    
+    // Scroll to search results if there are any
+    if (query.trim()) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.getElementById('search-results')?.offsetTop || 0,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <Navbar onSearch={handleSearch} />
+      <main>
+        <Hero onSearch={handleSearch} />
+        
+        <div id="search-results">
+          <div className="container mx-auto px-4">
+            <SearchResults products={searchResults} searchQuery={searchQuery} />
+          </div>
+        </div>
+        
+        {!searchQuery && <FeaturedCategories />}
+      </main>
     </div>
   );
 };
