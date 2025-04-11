@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,6 +9,7 @@ import Categories from "./pages/Categories";
 import CategoryDetail from "./pages/CategoryDetail";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import { SustainableProducts } from "./components/SustainableProducts";
 import { useEffect } from "react";
 
 // Create a component to handle search queries from URL
@@ -45,6 +45,7 @@ const App = () => (
           <Route path="/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/sustainable-products" element={<SustainableProducts />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
