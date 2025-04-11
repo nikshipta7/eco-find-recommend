@@ -3,7 +3,6 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import { categories } from '@/data/products';
 import CategoryCard from '@/components/CategoryCard';
-import { searchProducts } from '@/data/products';
 import { useNavigate } from 'react-router-dom';
 
 const Categories = () => {
@@ -19,7 +18,7 @@ const Categories = () => {
       <main className="flex-1 container mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-8">All Categories</h1>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {categories.map((category) => (
             <CategoryCard 
               key={category.id} 

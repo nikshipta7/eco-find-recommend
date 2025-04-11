@@ -1,4 +1,3 @@
-
 export interface Product {
   id: string;
   name: string;
@@ -10,309 +9,232 @@ export interface Product {
   ecoScore: number;
   type: string;
   category: string;
+  subcategory?: string;
   image: string;
   description: string;
 }
 
+export interface Category {
+  id: string;
+  name: string;
+  image: string;
+  subcategories?: SubCategory[];
+}
+
+export interface SubCategory {
+  id: string;
+  name: string;
+}
+
+export const categories: Category[] = [
+  { 
+    id: "personal-care", 
+    name: "Personal Care / Hygiene", 
+    image: "/placeholder.svg",
+    subcategories: [
+      { id: "soap", name: "Soap (Herbal, Antibacterial)" },
+      { id: "toothpaste", name: "Toothpaste (Whitening, Herbal)" },
+      { id: "toothbrush", name: "Toothbrush (Soft, Medium)" },
+      { id: "lotion", name: "Lotion (Moisturizing, Soothing)" },
+      { id: "body-wash", name: "Body Wash" },
+      { id: "shampoo", name: "Shampoo" },
+      { id: "conditioner", name: "Conditioner" },
+      { id: "face-wash", name: "Face Wash" },
+      { id: "deodorant", name: "Deodorant" },
+      { id: "hand-sanitizer", name: "Hand Sanitizer" },
+      { id: "wet-wipes", name: "Wet Wipes" },
+      { id: "face-scrub", name: "Face Scrub" },
+      { id: "lip-balm", name: "Lip Balm" },
+      { id: "sunscreen", name: "Sunscreen" },
+      { id: "mouthwash", name: "Mouthwash" }
+    ]
+  },
+  { 
+    id: "grooming-haircare", 
+    name: "Grooming & Haircare", 
+    image: "/placeholder.svg",
+    subcategories: [
+      { id: "hair-oil", name: "Hair Oil" },
+      { id: "beard-oil", name: "Beard Oil" },
+      { id: "hair-gel", name: "Hair Gel / Pomade" },
+      { id: "shaving-cream", name: "Shaving Cream" },
+      { id: "razor", name: "Razor / Eco Razor" },
+      { id: "cotton-swabs", name: "Cotton Swabs" },
+      { id: "comb", name: "Comb / Hair Brush" }
+    ]
+  },
+  { 
+    id: "household-cleaning", 
+    name: "Household & Cleaning", 
+    image: "/placeholder.svg",
+    subcategories: [
+      { id: "dishwashing-liquid", name: "Dishwashing Liquid" },
+      { id: "floor-cleaner", name: "Floor Cleaner" },
+      { id: "laundry-detergent", name: "Laundry Detergent (Eco-friendly)" },
+      { id: "toilet-cleaner", name: "Toilet Cleaner" },
+      { id: "cleaning-cloths", name: "Reusable Cleaning Cloths" },
+      { id: "garbage-bags", name: "Garbage Bags (Biodegradable)" },
+      { id: "kitchen-towels", name: "Reusable Kitchen Towels" },
+      { id: "air-freshener", name: "Air Freshener (Natural)" }
+    ] 
+  },
+  { 
+    id: "natural-wellness", 
+    name: "Additional Natural Wellness Products", 
+    image: "/placeholder.svg",
+    subcategories: [
+      { id: "essential-oils", name: "Essential Oils (Lavender, Peppermint)" },
+      { id: "organic-soap", name: "Organic Hand Soap" },
+      { id: "bamboo-pads", name: "Bamboo Cotton Pads" },
+      { id: "hair-mask", name: "Herbal Hair Mask" },
+      { id: "face-pack", name: "Clay Face Pack" }
+    ]
+  }
+];
+
+// Our sample products
 export const products: Product[] = [
+  // Personal Care / Hygiene
   {
     id: "1",
-    name: "Organic Cotton T-Shirt",
-    brand: "EcoWear",
-    price: 29.99,
-    carbonFootprint: 2.3,
+    name: "Herbal Antibacterial Soap",
+    brand: "EcoClean",
+    price: 5.99,
+    carbonFootprint: 0.8,
     recyclableMaterial: true,
     organicLabel: true,
     ecoScore: 5,
-    type: "Clothing",
-    category: "Apparel",
+    type: "Soap",
+    category: "Personal Care / Hygiene",
+    subcategory: "soap",
     image: "/placeholder.svg",
-    description: "Made with 100% organic cotton, this t-shirt is comfortable and eco-friendly."
+    description: "Handmade herbal soap with antibacterial properties from natural ingredients."
   },
   {
     id: "2",
-    name: "Bamboo Toothbrush",
-    brand: "GreenSmile",
+    name: "Whitening Herbal Toothpaste",
+    brand: "NatureBright",
     price: 4.99,
     carbonFootprint: 0.5,
     recyclableMaterial: true,
     organicLabel: true,
     ecoScore: 5,
-    type: "Bathroom",
-    category: "Personal Care",
+    type: "Toothpaste",
+    category: "Personal Care / Hygiene",
+    subcategory: "toothpaste",
     image: "/placeholder.svg",
-    description: "Biodegradable bamboo toothbrush with plant-based bristles."
+    description: "Natural toothpaste that brightens your smile without harsh chemicals."
   },
-  {
-    id: "3",
-    name: "Recycled Glass Water Bottle",
-    brand: "AquaEarth",
-    price: 24.99,
-    carbonFootprint: 1.2,
-    recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 4,
-    type: "Kitchen",
-    category: "Home Goods",
-    image: "/placeholder.svg",
-    description: "Made from 100% recycled glass, this stylish water bottle is BPA-free and dishwasher safe."
-  },
-  {
-    id: "4",
-    name: "LED Light Bulb Pack",
-    brand: "EcoLuminate",
-    price: 12.99,
-    carbonFootprint: 0.8,
-    recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 4,
-    type: "Lighting",
-    category: "Home Goods",
-    image: "/placeholder.svg",
-    description: "Energy-efficient LED bulbs that last up to 15,000 hours, saving electricity and reducing waste."
-  },
-  {
-    id: "5",
-    name: "Recycled Paper Notebook",
-    brand: "GreenWrite",
-    price: 8.99,
-    carbonFootprint: 0.3,
-    recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 4,
-    type: "Stationery",
-    category: "Office Supplies",
-    image: "/placeholder.svg",
-    description: "Notebook made from 100% post-consumer recycled paper with soy-based ink printing."
-  },
-  {
-    id: "6",
-    name: "Hemp Backpack",
-    brand: "NaturePack",
-    price: 49.99,
-    carbonFootprint: 1.8,
-    recyclableMaterial: true,
-    organicLabel: true,
-    ecoScore: 5,
-    type: "Bags",
-    category: "Accessories",
-    image: "/placeholder.svg",
-    description: "Durable backpack made from organic hemp with recycled polyester lining."
-  },
-  {
-    id: "7",
-    name: "Solar Power Bank",
-    brand: "SunCharge",
-    price: 39.99,
-    carbonFootprint: 2.1,
-    recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 4,
-    type: "Electronics",
-    category: "Technology",
-    image: "/placeholder.svg",
-    description: "Portable power bank that can be charged using solar energy, perfect for outdoor use."
-  },
-  {
-    id: "8",
-    name: "Biodegradable Phone Case",
-    brand: "EcoTech",
-    price: 19.99,
-    carbonFootprint: 0.4,
-    recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 4,
-    type: "Accessories",
-    category: "Technology",
-    image: "/placeholder.svg",
-    description: "Phone case made from biodegradable materials that protects your device while being kind to the planet."
-  },
-  {
-    id: "9",
-    name: "Reusable Silicone Food Bags",
-    brand: "FreshGreen",
-    price: 15.99,
-    carbonFootprint: 1.0,
-    recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 4,
-    type: "Kitchen",
-    category: "Home Goods",
-    image: "/placeholder.svg",
-    description: "Set of reusable silicone food storage bags, an eco-friendly alternative to single-use plastic bags."
-  },
-  {
-    id: "10",
-    name: "Organic Wool Sweater",
-    brand: "NatureKnit",
-    price: 79.99,
-    carbonFootprint: 3.2,
-    recyclableMaterial: true,
-    organicLabel: true,
-    ecoScore: 4,
-    type: "Clothing",
-    category: "Apparel",
-    image: "/placeholder.svg",
-    description: "Warm and comfortable sweater made from organic wool sourced from ethically raised sheep."
-  },
-  {
-    id: "11",
-    name: "Bamboo Cutting Board",
-    brand: "EcoChef",
-    price: 29.99,
-    carbonFootprint: 1.3,
-    recyclableMaterial: true,
-    organicLabel: true,
-    ecoScore: 5,
-    type: "Kitchen",
-    category: "Home Goods",
-    image: "/placeholder.svg",
-    description: "Durable bamboo cutting board, a sustainable alternative to plastic cutting boards."
-  },
-  {
-    id: "12",
-    name: "Recycled Aluminum Water Bottle",
-    brand: "PureEarth",
-    price: 18.99,
-    carbonFootprint: 1.5,
-    recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 3,
-    type: "Kitchen",
-    category: "Home Goods",
-    image: "/placeholder.svg",
-    description: "Lightweight water bottle made from recycled aluminum, perfect for on-the-go hydration."
-  },
-  {
-    id: "13",
-    name: "Organic Cotton Sheets",
-    brand: "DreamEco",
-    price: 89.99,
-    carbonFootprint: 3.5,
-    recyclableMaterial: true,
-    organicLabel: true,
-    ecoScore: 5,
-    type: "Bedding",
-    category: "Home Goods",
-    image: "/placeholder.svg",
-    description: "Luxuriously soft sheets made from organic cotton, free from harmful chemicals and pesticides."
-  },
-  {
-    id: "14",
-    name: "Plant-Based Cleaning Spray",
-    brand: "CleanGreen",
-    price: 7.99,
-    carbonFootprint: 0.6,
-    recyclableMaterial: true,
-    organicLabel: true,
-    ecoScore: 5,
-    type: "Cleaning",
-    category: "Home Goods",
-    image: "/placeholder.svg",
-    description: "All-purpose cleaning spray made from plant-based ingredients, effective and eco-friendly."
-  },
+  
+  // Grooming & Haircare
   {
     id: "15",
-    name: "Recycled Plastic Outdoor Chair",
-    brand: "EcoLiving",
-    price: 79.99,
-    carbonFootprint: 4.2,
+    name: "Organic Argan Hair Oil",
+    brand: "PureRoots",
+    price: 14.99,
+    carbonFootprint: 1.2,
     recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 3,
-    type: "Furniture",
-    category: "Home Goods",
+    organicLabel: true,
+    ecoScore: 4,
+    type: "Hair Oil",
+    category: "Grooming & Haircare",
+    subcategory: "hair-oil",
     image: "/placeholder.svg",
-    description: "Durable outdoor chair made from recycled ocean plastic, helping to clean up our oceans."
+    description: "Nourishing hair oil made from organic argan nuts to strengthen and moisturize hair."
   },
   {
     id: "16",
-    name: "Solar-Powered Garden Lights",
-    brand: "SunGlow",
-    price: 34.99,
-    carbonFootprint: 1.7,
+    name: "Cedar & Sandalwood Beard Oil",
+    brand: "WildGrooming",
+    price: 18.99,
+    carbonFootprint: 1.0,
+    recyclableMaterial: true,
+    organicLabel: true,
+    ecoScore: 4,
+    type: "Beard Oil",
+    category: "Grooming & Haircare",
+    subcategory: "beard-oil",
+    image: "/placeholder.svg",
+    description: "Premium beard oil with cedar and sandalwood essential oils for a well-groomed beard."
+  },
+  
+  // Household & Cleaning
+  {
+    id: "23",
+    name: "Citrus Enzyme Dishwashing Liquid",
+    brand: "CleanGreen",
+    price: 6.99,
+    carbonFootprint: 0.9,
+    recyclableMaterial: true,
+    organicLabel: true,
+    ecoScore: 5,
+    type: "Dishwashing Liquid",
+    category: "Household & Cleaning",
+    subcategory: "dishwashing-liquid",
+    image: "/placeholder.svg",
+    description: "Plant-based dishwashing liquid with natural citrus enzymes that cut through grease."
+  },
+  {
+    id: "24",
+    name: "Multi-Surface Floor Cleaner",
+    brand: "EcoHome",
+    price: 9.99,
+    carbonFootprint: 1.1,
     recyclableMaterial: true,
     organicLabel: false,
     ecoScore: 4,
-    type: "Outdoor",
-    category: "Garden",
+    type: "Floor Cleaner",
+    category: "Household & Cleaning",
+    subcategory: "floor-cleaner",
     image: "/placeholder.svg",
-    description: "Set of energy-efficient garden lights powered by solar energy, no electricity needed."
+    description: "Effective floor cleaner made with biodegradable ingredients safe for all surfaces."
   },
+  
+  // Additional Natural Wellness Products
   {
-    id: "17",
-    name: "Biodegradable Plant Pots",
-    brand: "GrowGreen",
+    id: "31",
+    name: "Lavender Essential Oil",
+    brand: "PureEssence",
     price: 12.99,
     carbonFootprint: 0.7,
     recyclableMaterial: true,
     organicLabel: true,
     ecoScore: 5,
-    type: "Gardening",
-    category: "Garden",
+    type: "Essential Oil",
+    category: "Additional Natural Wellness Products",
+    subcategory: "essential-oils",
     image: "/placeholder.svg",
-    description: "Set of biodegradable plant pots that can be planted directly into the soil."
+    description: "100% pure lavender essential oil for relaxation and natural aromatherapy."
   },
   {
-    id: "18",
-    name: "Natural Rubber Yoga Mat",
-    brand: "ZenEarth",
-    price: 59.99,
-    carbonFootprint: 2.8,
-    recyclableMaterial: true,
-    organicLabel: true,
-    ecoScore: 4,
-    type: "Exercise",
-    category: "Sports & Fitness",
-    image: "/placeholder.svg",
-    description: "Eco-friendly yoga mat made from natural rubber, free from harmful chemicals and PVC."
-  },
-  {
-    id: "19",
-    name: "Recycled Polyester Running Shoes",
-    brand: "EcoStride",
-    price: 89.99,
-    carbonFootprint: 3.8,
-    recyclableMaterial: true,
-    organicLabel: false,
-    ecoScore: 3,
-    type: "Footwear",
-    category: "Sports & Fitness",
-    image: "/placeholder.svg",
-    description: "Performance running shoes made from recycled plastic bottles, comfortable and sustainable."
-  },
-  {
-    id: "20",
-    name: "Organic Cotton Baby Onesie",
-    brand: "TinyEarth",
-    price: 19.99,
-    carbonFootprint: 1.2,
+    id: "32",
+    name: "Organic Liquid Hand Soap",
+    brand: "PureHands",
+    price: 7.99,
+    carbonFootprint: 0.8,
     recyclableMaterial: true,
     organicLabel: true,
     ecoScore: 5,
-    type: "Clothing",
-    category: "Kids & Baby",
+    type: "Hand Soap",
+    category: "Additional Natural Wellness Products",
+    subcategory: "organic-soap",
     image: "/placeholder.svg",
-    description: "Soft and gentle baby onesie made from 100% organic cotton, perfect for sensitive skin."
+    description: "Gentle organic hand soap with moisturizing plant extracts in a recyclable bottle."
   }
 ];
 
-export const categories = [
-  { id: "apparel", name: "Apparel", image: "/placeholder.svg" },
-  { id: "personal-care", name: "Personal Care", image: "/placeholder.svg" },
-  { id: "home-goods", name: "Home Goods", image: "/placeholder.svg" },
-  { id: "office-supplies", name: "Office Supplies", image: "/placeholder.svg" },
-  { id: "accessories", name: "Accessories", image: "/placeholder.svg" },
-  { id: "technology", name: "Technology", image: "/placeholder.svg" },
-  { id: "garden", name: "Garden", image: "/placeholder.svg" },
-  { id: "sports-fitness", name: "Sports & Fitness", image: "/placeholder.svg" },
-  { id: "kids-baby", name: "Kids & Baby", image: "/placeholder.svg" }
-];
-
-export const getProductsByCategory = (categoryId: string): Product[] => {
+export const getProductsByCategory = (categoryId: string, subcategoryId?: string): Product[] => {
   const categoryName = categories.find(cat => cat.id === categoryId)?.name;
   if (!categoryName) return [];
-  return products.filter(product => product.category === categoryName);
+  
+  let filteredProducts = products.filter(product => product.category === categoryName);
+  
+  // If subcategory is provided, filter by it too
+  if (subcategoryId) {
+    filteredProducts = filteredProducts.filter(product => product.subcategory === subcategoryId);
+  }
+  
+  return filteredProducts;
 };
 
 export const searchProducts = (query: string): Product[] => {
