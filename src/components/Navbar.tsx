@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Leaf, Search } from 'lucide-react';
@@ -32,6 +31,9 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
             </Link>
             <Link to="/categories" className="text-foreground hover:text-primary transition-colors">
               Categories
+            </Link>
+            <Link to="/sustainable-products" className="text-foreground hover:text-primary transition-colors">
+              Sustainable Products
             </Link>
             <Link to="/login" className="text-foreground hover:text-primary transition-colors">
               Login
