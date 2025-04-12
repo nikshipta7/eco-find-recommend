@@ -1,4 +1,5 @@
-import axios from 'axios';
+
+import apiService from './apiService';
 
 export interface SustainableProduct {
   name: string;
@@ -15,34 +16,9 @@ export interface SustainableProduct {
 
 export async function loadSustainableProducts(query: string = ''): Promise<SustainableProduct[]> {
   try {
-    const response = await axios.get('http://localhost:5003/api/sustainable-products', {
-      params: { query }
-    });
-    console.log('API Response:', response.data);  // Debug log
-    
-    if (response.data.success) {
-      return response.data.data.map((product: any) => {
-        // Extract numeric price from "INR X" format
-        const priceMatch = product.Price.match(/INR\s*(\d+)/);
-        const price = priceMatch ? parseFloat(priceMatch[1]) : 0;
-        
-        return {
-          name: product['Product Name'],
-          brand: product.Brand,
-          price: price,
-          ecoScore: product['EcoScore (1-5)'],
-          carbonFootprint: product['Carbon Footprint (kg CO2e)'],
-          organicLabel: product['Organic Label'],
-          recyclableMaterial: product['Recyclable Material'],
-          imageUrl: product['Image URL'],
-          type: product['Type of the Product'] || 'General',
-          sustainabilityScore: product['Predicted Sustainability']
-        };
-      });
-    } else {
-      console.error('Error loading sustainable products:', response.data.error);
-      return [];
-    }
+    const products = await apiService.getProducts(query);
+    console.log('Loaded products:', products.length);  // Debug log
+    return products;
   } catch (error) {
     console.error('Error loading sustainable products:', error);
     return [];
@@ -70,7 +46,15 @@ export function searchProducts(products: SustainableProduct[], query: string): S
 }
 
 export function getProductRecommendations(products: SustainableProduct[]): SustainableProduct[] {
-  // Implement your recommendation logic here
-  // This is a placeholder - you'll need to update this based on your actual recommendation logic
-  return products.sort((a, b) => b.sustainabilityScore - a.sustainabilityScore);
-} 
+  // Sort products by sustainability score in descending order
+  return products.sort((a, b) => {
+    const scoreA = a.sustainabilityScore || 0;
+    const scoreB = b.sustainabilityScore || 0;
+    return scoreB - scoreA;
+  });
+}
+
+// Export the addProduct function to make it available for adding new products
+export async function addSustainableProduct(product: Omit<SustainableProduct, 'sustainabilityScore'>): Promise<boolean> {
+  return apiService.addProduct(product);
+}
