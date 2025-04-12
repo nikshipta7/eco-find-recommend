@@ -17,13 +17,18 @@ const Admin = () => {
     }
   }, [isLoggedIn, navigate]);
 
+  // Handle search functionality
+  const handleSearch = (query: string) => {
+    navigate(`/?search=${encodeURIComponent(query)}`);
+  };
+
   if (!isLoggedIn) {
     return null; // Don't render anything while redirecting
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       <main className="container mx-auto py-8 px-4">
         <h1 className="text-3xl font-bold mb-8 text-center">Admin Dashboard</h1>
         <AdminProductForm />

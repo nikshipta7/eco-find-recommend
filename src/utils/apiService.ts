@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { SustainableProduct } from './sustainableProducts';
 
@@ -44,8 +43,8 @@ const mockProducts: SustainableProduct[] = [
 
 // Configuration object
 const config = {
-  useLocalApi: true,  // Toggle between mock data and actual API
-  apiBaseUrl: 'http://localhost:5000',  // Flask API URL
+  useLocalApi: false,  // Set to false to use MongoDB backend
+  apiBaseUrl: 'http://localhost:5003/api',  // Updated Flask API URL with MongoDB
 };
 
 // API service
@@ -68,22 +67,29 @@ const apiService = {
         }
         return Promise.resolve(mockProducts);
       } else {
-        // Use actual API
-        const response = await axios.get(`${config.apiBaseUrl}/get_products`, {
+        // Use MongoDB backend
+        console.log('Fetching products from MongoDB backend');
+        const response = await axios.get(`${config.apiBaseUrl}/products`, {
           params: { query }
         });
-        return response.data.map((product: any) => ({
-          name: product.name,
-          brand: product.brand,
-          price: product.price,
-          ecoScore: product.ecoScore,
-          carbonFootprint: product.carbonFootprint,
-          organicLabel: product.organicLabel,
-          recyclableMaterial: product.recyclableMaterial,
-          imageUrl: product.imageUrl || '/placeholder.svg',
-          type: product.type,
-          sustainabilityScore: product.sustainabilityScore
-        }));
+        
+        if (response.data.success) {
+          return response.data.data.map((product: any) => ({
+            name: product.name,
+            brand: product.brand,
+            price: product.price,
+            ecoScore: product.ecoScore,
+            carbonFootprint: product.carbonFootprint,
+            organicLabel: product.organicLabel,
+            recyclableMaterial: product.recyclableMaterial,
+            imageUrl: product.imageUrl || '/placeholder.svg',
+            type: product.type,
+            sustainabilityScore: product.sustainabilityScore
+          }));
+        } else {
+          console.error('API error:', response.data.error);
+          return [];
+        }
       }
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -102,23 +108,13 @@ const apiService = {
         // For development, we just log it
         return Promise.resolve(true);
       } else {
-        // Calculate a sustainability score based on product attributes
-        const calculatedScore = 
-          (product.ecoScore * 1.5) + 
-          (product.organicLabel ? 2 : 0) + 
-          (product.recyclableMaterial ? 2 : 0) - 
-          (product.carbonFootprint * 0.5);
-        
-        const productToAdd = {
-          ...product,
-          sustainabilityScore: parseFloat(calculatedScore.toFixed(1))
-        };
-        
+        // Use MongoDB backend
+        console.log('Adding product to MongoDB backend:', product);
         const response = await axios.post(
-          `${config.apiBaseUrl}/add_product`, 
-          productToAdd
+          `${config.apiBaseUrl}/add-product`, 
+          product
         );
-        return response.data && response.data.message === "Product added successfully!";
+        return response.data.success;
       }
     } catch (error) {
       console.error('Error adding product:', error);

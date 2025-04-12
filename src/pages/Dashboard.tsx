@@ -19,9 +19,14 @@ const Dashboard = () => {
     navigate('/admin');
   };
 
+  // Handle search
+  const handleSearch = (query: string) => {
+    navigate(`/?search=${encodeURIComponent(query)}`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       <main className="container mx-auto py-8 px-4">
         <div className="bg-white rounded-lg shadow-md p-6 max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-6">

@@ -5,12 +5,14 @@ import Navbar from './Navbar';
 import { ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
+import { useNavigate } from 'react-router-dom';
 
 export function SustainableProducts() {
   const [products, setProducts] = useState<SustainableProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProducts() {
@@ -30,11 +32,16 @@ export function SustainableProducts() {
   const handleAddToCart = (product: SustainableProduct) => {
     addToCart(product, 1);
   };
+  
+  // Handle search
+  const handleSearch = (query: string) => {
+    navigate(`/?search=${encodeURIComponent(query)}`);
+  };
 
   if (loading) {
     return (
       <div>
-        <Navbar />
+        <Navbar onSearch={handleSearch} />
         <div className="container mx-auto p-8 text-center">
           Loading sustainable products...
         </div>
@@ -45,7 +52,7 @@ export function SustainableProducts() {
   if (error) {
     return (
       <div>
-        <Navbar />
+        <Navbar onSearch={handleSearch} />
         <div className="container mx-auto p-8">
           <div className="text-red-500">{error}</div>
         </div>
@@ -55,7 +62,7 @@ export function SustainableProducts() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       <div className="container mx-auto p-4">
         <h2 className="text-2xl font-bold mb-4">Sustainable Products</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
