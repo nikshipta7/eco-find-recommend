@@ -1,73 +1,84 @@
-# Welcome to your Lovable project
 
-## Project info
+# Eco-Find-Recommend Application
 
-**URL**: https://lovable.dev/projects/dd217c21-5a2d-4166-9b3d-65e1b5d40a0d
+This project consists of a React frontend and a Flask backend with MongoDB integration.
 
-## How can I edit this code?
+## Project Structure
 
-There are several ways of editing your application.
+- `/src` - React frontend application
+- `/backend` - Flask backend API with MongoDB integration
 
-**Use Lovable**
+## Setup Instructions
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/dd217c21-5a2d-4166-9b3d-65e1b5d40a0d) and start prompting.
+### Prerequisites
 
-Changes made via Lovable will be committed automatically to this repo.
+- Node.js and npm for the frontend
+- Python 3.8+ for the backend
+- MongoDB installed and running locally
 
-**Use your preferred IDE**
+### Running the Backend (Flask with MongoDB)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1. Make sure MongoDB is running on your system:
+   ```
+   # On most systems, MongoDB can be started with:
+   mongod
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. Set up the Python environment and install dependencies:
+   ```
+   cd backend
+   python -m venv venv
+   
+   # On Windows
+   venv\Scripts\activate
+   
+   # On macOS/Linux
+   source venv/bin/activate
+   
+   # Install dependencies
+   pip install -r requirements.txt
+   ```
 
-Follow these steps:
+3. Run the Flask backend:
+   ```
+   python app.py
+   ```
+   The Flask API will start on http://localhost:5003
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Running the Frontend (React)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. In a new terminal, install frontend dependencies:
+   ```
+   npm install
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. Start the development server:
+   ```
+   npm run dev
+   ```
+   The frontend will start on http://localhost:8080
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Configuration
+
+By default, the frontend application is configured to use the MongoDB backend. This is controlled in the `src/utils/apiService.ts` file:
+
+```javascript
+const config = {
+  useLocalApi: false,  // Set to false to use MongoDB backend
+  apiBaseUrl: 'http://localhost:5003/api',  // Flask API URL
+};
 ```
 
-**Edit a file directly in GitHub**
+## Troubleshooting
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- If you encounter network errors connecting to the API, ensure:
+  1. MongoDB is running
+  2. The Flask backend is running
+  3. The API URL in `src/utils/apiService.ts` matches your Flask server address
 
-**Use GitHub Codespaces**
+## Available Features
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/dd217c21-5a2d-4166-9b3d-65e1b5d40a0d) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Browse sustainable products
+- Search for products
+- Admin dashboard for adding new products
+- Shopping cart functionality

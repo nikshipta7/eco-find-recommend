@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { SustainableProduct } from './sustainableProducts';
 
@@ -69,30 +70,53 @@ const apiService = {
       } else {
         // Use MongoDB backend
         console.log('Fetching products from MongoDB backend');
-        const response = await axios.get(`${config.apiBaseUrl}/products`, {
-          params: { query }
-        });
+        console.log(`API URL: ${config.apiBaseUrl}/products`);
         
-        if (response.data.success) {
-          return response.data.data.map((product: any) => ({
-            name: product.name,
-            brand: product.brand,
-            price: product.price,
-            ecoScore: product.ecoScore,
-            carbonFootprint: product.carbonFootprint,
-            organicLabel: product.organicLabel,
-            recyclableMaterial: product.recyclableMaterial,
-            imageUrl: product.imageUrl || '/placeholder.svg',
-            type: product.type,
-            sustainabilityScore: product.sustainabilityScore
-          }));
-        } else {
-          console.error('API error:', response.data.error);
-          return [];
+        try {
+          const response = await axios.get(`${config.apiBaseUrl}/products`, {
+            params: { query }
+          });
+          
+          console.log('API response:', response.data);
+          
+          if (response.data.success) {
+            return response.data.data.map((product: any) => ({
+              name: product.name,
+              brand: product.brand,
+              price: product.price,
+              ecoScore: product.ecoScore,
+              carbonFootprint: product.carbonFootprint,
+              organicLabel: product.organicLabel,
+              recyclableMaterial: product.recyclableMaterial,
+              imageUrl: product.imageUrl || '/placeholder.svg',
+              type: product.type,
+              sustainabilityScore: product.sustainabilityScore
+            }));
+          } else {
+            console.error('API error:', response.data.error);
+            return [];
+          }
+        } catch (error: any) {
+          console.error('Error fetching products:', error);
+          console.error('Error details:', error.message);
+          
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error('Error response data:', error.response.data);
+            console.error('Error response status:', error.response.status);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received from server. Is the backend running?');
+          }
+          
+          // Use mock data as fallback when API fails
+          console.log('Using mock data as fallback');
+          return mockProducts;
         }
       }
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('Error in apiService:', error);
       return [];
     }
   },
@@ -110,14 +134,24 @@ const apiService = {
       } else {
         // Use MongoDB backend
         console.log('Adding product to MongoDB backend:', product);
+        console.log(`API URL: ${config.apiBaseUrl}/add-product`);
+        
         const response = await axios.post(
           `${config.apiBaseUrl}/add-product`, 
           product
         );
+        
+        console.log('API response:', response.data);
         return response.data.success;
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error adding product:', error);
+      console.error('Error details:', error.message);
+      
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+      }
+      
       return false;
     }
   }
