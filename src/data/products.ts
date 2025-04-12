@@ -30,7 +30,7 @@ export const categories: Category[] = [
   { 
     id: "personal-care", 
     name: "Personal Care / Hygiene", 
-    image: "/placeholder.svg",
+    image: "/src/images/personal_care.jpeg",
     subcategories: [
       { id: "soap", name: "Soap (Herbal, Antibacterial)" },
       { id: "toothpaste", name: "Toothpaste (Whitening, Herbal)" },
@@ -52,7 +52,7 @@ export const categories: Category[] = [
   { 
     id: "grooming-haircare", 
     name: "Grooming & Haircare", 
-    image: "/placeholder.svg",
+    image: "/src/images/grooming.webp",
     subcategories: [
       { id: "hair-oil", name: "Hair Oil" },
       { id: "beard-oil", name: "Beard Oil" },
@@ -66,7 +66,7 @@ export const categories: Category[] = [
   { 
     id: "household-cleaning", 
     name: "Household & Cleaning", 
-    image: "/placeholder.svg",
+    image: "/src/images/cleaning.png",
     subcategories: [
       { id: "dishwashing-liquid", name: "Dishwashing Liquid" },
       { id: "floor-cleaner", name: "Floor Cleaner" },
@@ -81,7 +81,7 @@ export const categories: Category[] = [
   { 
     id: "natural-wellness", 
     name: "Additional Natural Wellness Products", 
-    image: "/placeholder.svg",
+    image: "/src/images/additional.webp",
     subcategories: [
       { id: "essential-oils", name: "Essential Oils (Lavender, Peppermint)" },
       { id: "organic-soap", name: "Organic Hand Soap" },
@@ -107,7 +107,7 @@ export const products: Product[] = [
     type: "Soap",
     category: "Personal Care / Hygiene",
     subcategory: "soap",
-    image: "/placeholder.svg",
+    image: "/src/images/additional.webp",
     description: "Handmade herbal soap with antibacterial properties from natural ingredients."
   },
   {
@@ -122,7 +122,7 @@ export const products: Product[] = [
     type: "Toothpaste",
     category: "Personal Care / Hygiene",
     subcategory: "toothpaste",
-    image: "/placeholder.svg",
+    image: "/src/images/additional.webp",
     description: "Natural toothpaste that brightens your smile without harsh chemicals."
   },
   
